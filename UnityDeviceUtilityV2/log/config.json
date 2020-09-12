@@ -1,0 +1,8 @@
+{
+  "maxInMB": 10,
+  "maxLogFiles": 5,
+  "enable": true,
+  "treatmentFile": "clinical_treatment_log_encrypted-20170811T205737Z.xml",
+  "drive": "XY:",
+  "p" : "jkou98709jiohit6trgfhokjpoi-9i90ulj"
+}

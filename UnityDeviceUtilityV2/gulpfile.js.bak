@@ -1,0 +1,43 @@
+var gulp = require('gulp');
+var path = require('path');
+var uglifyjs = require('uglify-js'); // can be a git checkout
+// or another module (such as `uglify-es` for ES6 support)
+var composer = require('gulp-uglify/composer');
+var rename = require('gulp-rename');
+var pump = require('pump');
+// var concat = require('gulp-concat');
+var connect = require('gulp-connect');
+// var uglify = require('gulp-uglify');
+var minify = composer(uglifyjs, console);
+// var jsSources = 'ServerComponents/*.js';
+var outputDir = 'dist';
+// gulp.task('js', function() {
+//   gulp.src(jsSources)
+//   .pipe(uglify())
+//   .pipe(concat('script.js'))
+//   .pipe(gulp.dest(outputDir))
+//   .pipe(connect.reload())
+// });
+gulp.task('compress', function (cb) {
+  // the same options as described above
+  var options = {
+    keep_fnames: false
+  };
+  pump([
+    gulp.src(path.join(__dirname, '/*.js')),
+    minify(options),
+    rename({ suffix: '.min' }),
+    gulp.dest(path.join(__dirname, outputDir))
+  ], cb
+  );
+});
+gulp.task('watch', function () {
+  gulp.watch(path.join(__dirname, '/*.js'), ['compress']);
+});
+gulp.task('connect', function () {
+  connect.server({
+    root: '.',
+    livereload: true
+  });
+});
+gulp.task('default', ['compress', 'connect', 'watch']);

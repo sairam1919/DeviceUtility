@@ -1,0 +1,617 @@
+
+<html>
+    <head>
+        <title>Mocha</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+        @charset "utf-8";
+
+body {
+  margin:0;
+}
+
+#mocha {
+  font: 20px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 60px 50px;
+}
+
+#mocha ul,
+#mocha li {
+  margin: 0;
+  padding: 0;
+}
+
+#mocha ul {
+  list-style: none;
+}
+
+#mocha h1,
+#mocha h2 {
+  margin: 0;
+}
+
+#mocha h1 {
+  margin-top: 15px;
+  font-size: 1em;
+  font-weight: 200;
+}
+
+#mocha h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mocha h1 a:hover {
+  text-decoration: underline;
+}
+
+#mocha .suite .suite h1 {
+  margin-top: 0;
+  font-size: .8em;
+}
+
+#mocha .hidden {
+  display: none;
+}
+
+#mocha h2 {
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+#mocha .suite {
+  margin-left: 15px;
+}
+
+#mocha .test {
+  margin-left: 15px;
+  overflow: hidden;
+}
+
+#mocha .test.pending:hover h2::after {
+  content: '(pending)';
+  font-family: arial, sans-serif;
+}
+
+#mocha .test.pass.medium .duration {
+  background: #c09853;
+}
+
+#mocha .test.pass.slow .duration {
+  background: #b94a48;
+}
+
+#mocha .test.pass::before {
+  content: '✓';
+  font-size: 12px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: #00d6b2;
+}
+
+#mocha .test.pass .duration {
+  font-size: 9px;
+  margin-left: 5px;
+  padding: 2px 5px;
+  color: #fff;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#mocha .test.pass.fast .duration {
+  display: none;
+}
+
+#mocha .test.pending {
+  color: #0b97c4;
+}
+
+#mocha .test.pending::before {
+  content: '◦';
+  color: #0b97c4;
+}
+
+#mocha .test.fail {
+  color: #c00;
+}
+
+#mocha .test.fail pre {
+  color: black;
+}
+
+#mocha .test.fail::before {
+  content: '✖';
+  font-size: 12px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: #c00;
+}
+
+#mocha .test pre.error {
+  color: #c00;
+  max-height: 300px;
+  overflow: auto;
+}
+
+#mocha .test .html-error {
+  overflow: auto;
+  color: black;
+  line-height: 1.5;
+  display: block;
+  float: left;
+  clear: left;
+  font: 12px/1.5 monaco, monospace;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid #eee;
+  max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
+  max-width: calc(100% - 42px); /*(2)*/
+  max-height: 300px;
+  word-wrap: break-word;
+  border-bottom-color: #ddd;
+  -webkit-box-shadow: 0 1px 3px #eee;
+  -moz-box-shadow: 0 1px 3px #eee;
+  box-shadow: 0 1px 3px #eee;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#mocha .test .html-error pre.error {
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0;
+  -moz-box-shadow: 0;
+  box-shadow: 0;
+  padding: 0;
+  margin: 0;
+  margin-top: 18px;
+  max-height: none;
+}
+
+/**
+ * (1): approximate for browsers not supporting calc
+ * (2): 42 = 2*15 + 2*10 + 2*1 (padding + margin + border)
+ *      ^^ seriously
+ */
+#mocha .test pre {
+  display: block;
+  float: left;
+  clear: left;
+  font: 12px/1.5 monaco, monospace;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid #eee;
+  max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
+  max-width: calc(100% - 42px); /*(2)*/
+  word-wrap: break-word;
+  border-bottom-color: #ddd;
+  -webkit-box-shadow: 0 1px 3px #eee;
+  -moz-box-shadow: 0 1px 3px #eee;
+  box-shadow: 0 1px 3px #eee;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#mocha .test h2 {
+  position: relative;
+}
+
+#mocha .test a.replay {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  text-decoration: none;
+  vertical-align: middle;
+  display: block;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  background: #eee;
+  font-size: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-transition:opacity 200ms;
+  -moz-transition:opacity 200ms;
+  -o-transition:opacity 200ms;
+  transition: opacity 200ms;
+  opacity: 0.3;
+  color: #888;
+}
+
+#mocha .test:hover a.replay {
+  opacity: 1;
+}
+
+#mocha-report.pass .test.fail {
+  display: none;
+}
+
+#mocha-report.fail .test.pass {
+  display: none;
+}
+
+#mocha-report.pending .test.pass,
+#mocha-report.pending .test.fail {
+  display: none;
+}
+#mocha-report.pending .test.pass.pending {
+  display: block;
+}
+
+#mocha-error {
+  color: #c00;
+  font-size: 1.5em;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+#mocha-stats {
+  position: fixed;
+  top: 15px;
+  right: 10px;
+  font-size: 12px;
+  margin: 0;
+  color: #888;
+  z-index: 1;
+}
+
+#mocha-stats .progress {
+  float: right;
+  padding-top: 0;
+
+  /**
+   * Set safe initial values, so mochas .progress does not inherit these
+   * properties from Bootstrap .progress (which causes .progress height to
+   * equal line height set in Bootstrap).
+   */
+  height: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: initial;
+}
+
+#mocha-stats em {
+  color: black;
+}
+
+#mocha-stats a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mocha-stats a:hover {
+  border-bottom: 1px solid #eee;
+}
+
+#mocha-stats li {
+  display: inline-block;
+  margin: 0 5px;
+  list-style: none;
+  padding-top: 11px;
+}
+
+#mocha-stats canvas {
+  width: 40px;
+  height: 40px;
+}
+
+#mocha code .comment { color: #ddd; }
+#mocha code .init { color: #2f6fad; }
+#mocha code .string { color: #5890ad; }
+#mocha code .keyword { color: #8a6343; }
+#mocha code .number { color: #2f6fad; }
+
+@media screen and (max-device-width: 480px) {
+  #mocha {
+    margin: 60px 0px;
+  }
+
+  #mocha #stats {
+    position: absolute;
+  }
+}
+#mocha .test.pass pre {
+    display: none;
+}
+
+#mocha .test.fail pre {
+    display: none;
+}
+
+#mocha .test pre.error {
+    display: block;
+}
+
+#mocha .test .html-error pre.error {
+    box-shadow: none;
+}
+
+#mocha .test:hover h2:after {
+    color: #888888;
+    content: "(view source)";
+    font-family: arial;
+    font-size: 12px;
+    position: relative;
+    right: -10px;
+    top: 0;
+}
+
+#mocha .test.pass.pending h2 {
+    cursor: auto;
+}
+
+#mocha .mocha-header {
+    right: 30px;
+    position: fixed;
+    top: 15px;
+    font-size: 14px;
+    margin: 0;
+    color: #888;
+    z-index: 1;
+}
+
+#mocha .mocha-header em {
+    font-style: normal;
+    color: black;
+}
+
+#mocha .mocha-header ul {
+    display: inline-block;
+}
+
+#mocha .mocha-stats li {
+    display: inline-block;
+    margin: 0 5px;
+    list-style: none;
+    padding-top: 11px;
+}
+
+#mocha .mocha-menu {
+    margin-right: 10px;
+}
+
+#mocha .mocha-menu li {
+    display: inline-block;
+    margin-left: 10px;
+    list-style: none;
+}
+
+#mocha .mocha-menu li span {
+    display: inline-block;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 7px 2px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+    border-radius: 5px;
+    user-select: none;
+}
+
+#mocha .mocha-menu li span.checked {
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,.2);
+}
+
+#mocha .toggle-passes {
+    background: #b94a48;
+}
+
+        </style>
+    </head>
+    <body>
+        <div id="mocha">
+            <div class="mocha-header">
+                <ul class="mocha-menu">
+                    <li><span id="toggle-passes" class="toggle-passes">show failures only</span></li>
+                </ul>
+                <ul class="mocha-stats">
+                    <li class="passes">passes: <em>12</em></li>
+                    <li class="pending">pending: <em>0</em></li>
+                    <li class="failures">failures: <em>0</em></li>
+                    <li class="duration">duration: <em>388ms</em></li>
+                </ul>
+            </div>
+            <ul id="report"><li class="suite"><h1>IntegrationTest</h1><ul><li class="suite"><h1>IsRunning</h1><ul><li class="test pass medium"><h2>it should return application name and version<span class="duration">48ms</span></h2><pre><code>request(options, function (err, res) {
+  if (err) throw new Error(err);
+  let r = JSON.parse(res.body);
+  expect(r.status).equals(&#x27;SUCCESS&#x27;);
+  expect(r.data.appName).to.be.an(&#x27;string&#x27;);
+  expect(r.data.version).to.be.an(&#x27;string&#x27;);
+  expect(r.data.deviceMetaData).to.be.an(&#x27;array&#x27;);
+  expect(res.statusCode).to.equal(200);
+  done();
+});</code></pre></li></ul></li><li class="suite"><h1>ListRemovableDevices</h1><ul><li class="test pass fast"><h2>it should return array of connected devices<span class="duration">14ms</span></h2><pre><code>options.url = &#x27;http://localhost:3009/deviceutility/Services/ListRemovableStorageDevices&#x27;;
+request(options, function (err, res) {
+  if (err) throw new Error(err);
+  let r = JSON.parse(res.body);
+  expect(r.status).equals(&#x27;SUCCESS&#x27;);
+  expect(r.data).to.be.an(&#x27;array&#x27;);
+  expect(r.data).length.greaterThan(0, &#x27;Please connect atleast one USB drive to exectute this test suite&#x27;);
+  expect(res.statusCode).to.equal(200);
+  // assign first connected drive.
+  drive = r.data[0].path;
+  done();
+});</code></pre></li></ul></li><li class="suite"><h1>ReadProgramFile</h1><ul><li class="test pass fast"><h2>it should read a filefrom the Device and return object<span class="duration">19ms</span></h2><pre><code>let body = { drive: drive, fileSystem: DEVICE_FILESYSTEM_MOCK };
+options.method = &#x27;POST&#x27;;
+options.url = &#x27;http://localhost:3009/deviceutility/services/ReadProgram&#x27;;
+options.body = body;
+options.json = true;
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(r.status).equals(&#x27;SUCCESS&#x27;);
+  expect(r.data).to.be.an(&#x27;object&#x27;);
+  expect(res.statusCode).to.equal(200);
+  done();
+});</code></pre></li><li class="test pass fast"><h2>it should read a filefrom the Device and return object(Negative Scenario)<span class="duration">13ms</span></h2><pre><code>let body = { drive: drive, fileSystem: DEVICE_FILESYSTEM_MOCK_NEGATIVE };
+options.method = &#x27;POST&#x27;;
+options.url = &#x27;http://localhost:3009/deviceutility/services/ReadProgram&#x27;;
+options.body = body;
+options.json = true;
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(r.status).equals(&#x27;failure&#x27;);
+  done();
+});</code></pre></li></ul></li><li class="suite"><h1>ListTreatmentFiles</h1><ul><li class="test pass fast"><h2>it should GET all the TreatmentFiles <span class="duration">12ms</span></h2><pre><code>let body = { drive: drive, fileSystem: DEVICE_FILESYSTEM_MOCK };
+options.url = &#x27;http://localhost:3009/deviceutility/services/ListTreatmentFiles&#x27;;
+options.body = body;
+options.json = true;
+request(options, function (error, res, body) {
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(r.status).equals(&#x27;SUCCESS&#x27;);
+  expect(r.data).to.be.an(&#x27;array&#x27;);
+  expect(r.data).length.greaterThan(0, &#x27;Require atleast one Treatment file to perform Read Treatment file operation&#x27;);
+  filePath = r.data[0].path;
+  expect(res.statusCode).to.equal(200);
+  done();
+});</code></pre></li><li class="test pass fast"><h2>it should GET all the TreatmentFiles(Negative Scenario) <span class="duration">13ms</span></h2><pre><code>let body = { drive: drive, fileSystem: DEVICE_FILESYSTEM_MOCK_NEGATIVE };
+options.url = &#x27;http://localhost:3009/deviceutility/services/ListTreatmentFiles&#x27;;
+options.body = body;
+options.json = true;
+request(options, function (error, res, body) {
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(r.status).equals(&#x27;error&#x27;);
+  done();
+});</code></pre></li></ul></li><li class="suite"><h1>ReadTreatmentFile</h1><ul><li class="test pass fast"><h2>it should read a file from the Device and return data<span class="duration">21ms</span></h2><pre><code>filePath = {
+  _folderPath: filePath.folderPath,
+  _fileName: filePath.fileName
+};
+let body = { drive: drive, filePath: filePath };
+options.url = &#x27;http://localhost:3009/deviceutility/services/ReadTreatmentFile&#x27;;
+options.body = body;
+request(options, function (error, res) {
+  // console.log(&#x27;res&#x27;, res.statusCode, res.status, res.body);
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(res.statusCode).to.equal(200);
+  expect(r.status).equals(&#x27;SUCCESS&#x27;);
+  expect(r.data).to.be.an(&#x27;string&#x27;);
+  done();
+});</code></pre></li><li class="test pass fast"><h2>it should read a file from the Device and return data(Negative Scenario)<span class="duration">14ms</span></h2><pre><code>filePath = {
+  _folderPath: DEVICE_FILESYSTEM_MOCK_NEGATIVE._treatmentFilePath._folderPath,
+  _fileName: config.treatmentFile
+};
+let body = { drive: drive, filePath: filePath };
+options.url = &#x27;http://localhost:3009/deviceutility/services/ReadTreatmentFile&#x27;;
+options.body = body;
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(r.status.toUpperCase()).equals(&#x27;ERROR&#x27;);
+  done();
+});</code></pre></li></ul></li><li class="suite"><h1>UnAssignDrive </h1><ul><li class="test pass slow"><h2>it should clean up the Device<span class="duration">159ms</span></h2><pre><code>options.url = &#x27;http://localhost:3009/deviceutility/services/UnAssignDrive&#x27;;
+options.body = { drive: drive };
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  expect(res.statusCode).to.equal(200);
+  let r = res.body;
+  expect(r.status).equals(&#x27;SUCCESS&#x27;);
+  done();
+});</code></pre></li><li class="test pass fast"><h2>it should clean up the Device<span class="duration">9ms</span></h2><pre><code>options.url = &#x27;http://localhost:3009/deviceutility/services/UnAssignDrive&#x27;;
+options.body = { drive: config.drive };
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  let r = res.body;
+  expect(r.status.toUpperCase()).equals(&#x27;ERROR&#x27;);
+  done();
+});</code></pre></li></ul></li><li class="suite"><h1>WritePrescriptionFile</h1><ul><li class="test pass fast"><h2>it should write a file to the selected device and return success message<span class="duration">24ms</span></h2><pre><code>options.url = &#x27;http://localhost:3009/deviceutility/services/WriteProgram&#x27;;
+options.body = { drive: drive, fileSystem: DEVICE_FILESYSTEM_MOCK };
+options.body.data = ENCODED_XML_MOCK;
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  expect(res.body).to.be.an(&#x27;object&#x27;);
+  expect(res.statusCode).to.equal(200);
+  done();
+});</code></pre></li><li class="test pass fast"><h2>it should write a file to the selected device and return success message (Negative Scenario)<span class="duration">13ms</span></h2><pre><code>options.url = &#x27;http://localhost:3009/deviceutility/services/WriteProgram&#x27;;
+options.body = { drive: config.drive, fileSystem: DEVICE_FILESYSTEM_MOCK_NEGATIVE };
+options.body.data = ENCODED_XML_MOCK;
+request(options, function (error, res) {
+  if (error) throw new Error(error);
+  expect(res.body.status.toUpperCase()).equals(&#x27;ERROR&#x27;);
+  done();
+});</code></pre></li></ul></li></ul></li></ul>
+        </div>
+        <script>
+        function hideSuitesWithout(className) {
+    var suites = document.querySelectorAll('#report > .suite');
+
+    for (var i = 0; i < suites.length; i++) {
+        let suite = suites[i];
+
+        var els = suite.getElementsByClassName(className);
+        if (!els.length) {
+            suite.classList.add('hidden');
+        }
+    }
+}
+
+function unhide() {
+    var suites = document.getElementsByClassName('suite hidden');
+
+    while (suites.length) {
+        suites[0].classList.remove('hidden');
+    }
+}
+
+function togglePasses() {
+    var report = document.getElementById('report');
+
+    report.classList.toggle('hide-passes');
+
+    if (report.classList.contains('hide-passes')) {
+        hideSuitesWithout('test fail');
+    } else {
+        unhide();
+    }
+}
+
+document.getElementById('toggle-passes').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    this.classList.toggle('checked');
+
+    togglePasses();
+});
+
+var tests = document.getElementsByClassName('test');
+
+for (var i = 0; i < tests.length; i++) {
+    var elem = tests[i];
+    var head = elem.children[0];
+
+    head.onclick = function () {
+        var code = this.parentElement.children[1];
+        var display = code.style.display;
+
+        if (display && display === 'block') {
+            code.style.display = 'none';
+        } else {
+            code.style.display = 'block';
+        }
+    };
+}
+        </script>
+    </body>
+</html>
